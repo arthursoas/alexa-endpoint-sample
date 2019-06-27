@@ -27,7 +27,6 @@ class ResponseFormatter {
 				reprompt: {
 					outputSpeech: {...this.repromptOutputSpeech},
 				},
-				directives: {...this.directives},
 				shouldEndSession: this.shouldEndSession
 			}
 		}

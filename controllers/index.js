@@ -40,14 +40,11 @@ class Requests {
       playBehavior: 'ENQUEUE'
     };
 
-    const directives = {};
-
     const responseFormatter = new ResponseFormatter(
       body,
       outputSpeech,
       card,
       repromptOutputSpeech,
-      directives,
       false
     );
     const responseBody = responseFormatter.formatResponse();
