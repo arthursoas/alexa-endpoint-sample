@@ -4,7 +4,6 @@ class ResponseFormatter {
 		outputSpeech,
 		card,
 		repromptOutputSpeech,
-		directives,
 		shouldEndSession
 	) {
 		this.request = request;
