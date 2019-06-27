@@ -9,10 +9,6 @@ app.post('/', (req, res) => {
   requests.handleMessage(req, res);
 });
 
-app.post('/message/handler', (req, res) => {
-  requests.handleMessage(req, res);
-});
-
 app.listen(process.env.PORT, () => {
   console.log("Server is running on "+ process.env.PORT +" port");
 });

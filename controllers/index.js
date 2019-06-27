@@ -1,8 +1,58 @@
+const LaunchRequest = require('../models/lauch_request');
+const ResponseFormatter = require('../services/response_formatter');
+
 class Requests {
   constructor() { }
 
   handleMessage(req, res) {
-    console.log(req.body);
+    const { body } = req;
+    switch (body.request.type) {
+      case 'LaunchRequest':
+        this.handleLaunchRequest(body, res);
+      default:
+        res.status(400);
+    }
+  }
+
+  handleLaunchRequest(body, res) {
+    const launchRequest = new LaunchRequest(body);
+    const outputSpeechText = launchRequest.generateAnswer();
+
+    const outputSpeech = {
+      type: 'PlainText',
+      text: outputSpeechText,
+      playBehavior: 'ENQUEUE'
+    };
+
+    const card = {
+      type: 'Standard',
+      title: 'Sempre Fit Modas',
+      text: outputSpeechText,
+      image: {
+        smallImageUrl: 'https://ph-cdn3.ecosweb.com.br/Web/posthaus/foto/moda-feminina/vestido-curto//vestido-listrado-mangas-7-8-com-faixa-avulsa_312303_301_1.jpg',
+        largeImageUrl: 'https://ibahia-cdn1.cworks.cloud/fileadmin/user_upload/ibahia/2019/marco/13/dica-moda.jpg'
+      }
+    };
+
+    const repromptOutputSpeech = {
+      type: 'PlainText',
+      text: 'Oi, você ainda está aí?',
+      playBehavior: 'ENQUEUE'
+    };
+
+    const directives = {};
+
+    const responseFormatter = new ResponseFormatter(
+      body,
+      outputSpeech,
+      card,
+      repromptOutputSpeech,
+      directives,
+      false
+    );
+    const responseBody = responseFormatter.formatResponse();
+
+    res.send(responseBody);
   }
 }
 
