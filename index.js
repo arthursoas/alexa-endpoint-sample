@@ -6,7 +6,7 @@ const app = express();
 app.use(express.json());
 
 app.post('/message/handler', (req, res) => {
-  requests.reserveItem(req, res);
+  requests.handleMessage(req, res);
 });
 
 app.listen(process.env.PORT, () => {
