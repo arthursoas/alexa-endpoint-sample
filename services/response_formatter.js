@@ -11,7 +11,6 @@ class ResponseFormatter {
 		this.outputSpeech = outputSpeech;
 		this.card = card;
 		this.repromptOutputSpeech = repromptOutputSpeech;
-		this.directives = directives;
 		this.shouldEndSession = shouldEndSession;
 	}
 
