@@ -27,7 +27,7 @@ class LaunchRequest {
       }
     };
 
-    const responseFormatter = new ResponseFormatter(outputSpeech, card, repromptOutputSpeech);
+    const responseFormatter = new ResponseFormatter(outputSpeech, card);
     return responseFormatter.formatResponse();
   }
 
@@ -50,7 +50,7 @@ class LaunchRequest {
       }
     };
 
-    const responseFormatter = new ResponseFormatter(outputSpeech, card, repromptOutputSpeech);
+    const responseFormatter = new ResponseFormatter(outputSpeech, card);
     return responseFormatter.formatResponse();
   }
 
