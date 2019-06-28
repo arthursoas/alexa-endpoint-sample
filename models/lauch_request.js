@@ -27,12 +27,6 @@ class LaunchRequest {
       }
     };
 
-    const repromptOutputSpeech = {
-      type: opType.plainText,
-      text: 'Oi, você ainda está aí?',
-      playBehavior: playBehavior.enqueue
-    };
-
     const responseFormatter = new ResponseFormatter(outputSpeech, card, repromptOutputSpeech);
     return responseFormatter.formatResponse();
   }
@@ -54,12 +48,6 @@ class LaunchRequest {
         smallImageUrl: 'https://ph-cdn3.ecosweb.com.br/Web/posthaus/foto/moda-feminina/vestido-curto//vestido-listrado-mangas-7-8-com-faixa-avulsa_312303_301_1.jpg',
         largeImageUrl: 'https://ibahia-cdn1.cworks.cloud/fileadmin/user_upload/ibahia/2019/marco/13/dica-moda.jpg'
       }
-    };
-
-    const repromptOutputSpeech = {
-      type: opType.plainText,
-      text: 'Oi, você ainda está aí?',
-      playBehavior: playBehavior.enqueue
     };
 
     const responseFormatter = new ResponseFormatter(outputSpeech, card, repromptOutputSpeech);
