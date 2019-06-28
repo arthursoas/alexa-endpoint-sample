@@ -73,7 +73,7 @@ class LaunchRequest {
   // Private
   generateAnswer() {
     const newAnswers = [
-      'Olá, seja bem vindo ao Sempre Fit Modas! Como posso ajudar?',
+      'Olá, seja bem vindo à Sempre Fit Modas! Como posso ajudar?',
       'Como é bom ter você na Sempre Fit Modas! Como posso ajudar?',
       'É um prazer recebê-lo na Sempre Fit Modas! Em que posso ajudar?'
     ];
