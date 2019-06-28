@@ -27,7 +27,7 @@ class IntentRequest {
       }
     };
 
-    const responseFormatter = new ResponseFormatter(outputSpeech, card);
+    const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, undefined, true);
     return responseFormatter.formatResponse();
   }
 
