@@ -1,16 +1,16 @@
 class ResponseFormatter {
   constructor(
-		request,
-		outputSpeech,
-		card,
-		repromptOutputSpeech,
-		shouldEndSession
+			outputSpeech = undefined,
+			card = undefined,
+			repromptOutputSpeech = undefined,
+			directives = undefined,
+			shouldEndSession = false
 	) {
-		this.request = request;
 		this.outputSpeech = outputSpeech;
 		this.card = card;
 		this.repromptOutputSpeech = repromptOutputSpeech;
 		this.shouldEndSession = shouldEndSession;
+		this.directives = directives;
 	}
 
 	formatResponse() {
@@ -20,11 +20,12 @@ class ResponseFormatter {
 				lastComunication: new Date().toISOString()
 			},
 			response: {
-				outputSpeech: {...this.outputSpeech},
-				card: {...this.card},
+				outputSpeech: this.outputSpeech,
+				card: this.card,
 				reprompt: {
-					outputSpeech: {...this.repromptOutputSpeech},
+					outputSpeech: this.repromptOutputSpeech,
 				},
+				directives: this.directives,
 				shouldEndSession: this.shouldEndSession
 			}
 		}
