@@ -8,8 +8,8 @@ const server = http.createServer(app);
 
 setImmediate(() => {
   server.timeout = 180000;
-  server.listen(port, ip, () => {
-    console.log('Express server listening on http://%s:%d', ip, port);
+  server.listen(port, () => {
+    console.log('Express server listening on port %d', port);
   })
 })
 
