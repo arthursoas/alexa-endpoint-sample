@@ -7,7 +7,7 @@ export const handleIntentRequest = (body, res) => {
   let response;
   switch (body.request.intent.name) {
     case 'SeeCollectionIntent':
-      response = newSeeCollectionIntentResponse(body);
+      response = SeeCollectionIntentResponse(body);
       break;
     default:
       res.send(400);
@@ -16,7 +16,7 @@ export const handleIntentRequest = (body, res) => {
   res.send(response);
 }
 
-const newSeeCollectionIntentResponse = (body) => {
+const SeeCollectionIntentResponse = (body) => {
   const { request } = body;
   if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
     if (request.intent.slots.CollectionType.value === undefined) {
@@ -53,8 +53,8 @@ const newSeeCollectionIntentResponse = (body) => {
 // Private
 const generateAnswer = () => {
   const answers = [
-    'A coleção que você está procurando é um tremendo sucesso, venha à nossa loja para conhecer.',
-    'Essa coleção é o que há no momento, não perca a oportunidade e venha conhecer nossa loja.'
+    'Você está procurando por ' + request.intent.slots.ClothesType.value +
+    ' da coleção ' + request.intent.slots.CollectionType.value
   ];
 
   return answers[Math.floor(Math.random()*answers.length)];
@@ -65,19 +65,19 @@ const generateSlotElicitationAnswer = (slot) => {
   switch (slot) {
     case 'CollectionType':
       answers = [
-        'Sobre qual coleção você deseja saber?.',
-        'Qual coleção você está procurando?.'
+        'Sobre qual coleção você deseja saber?',
+        'Qual coleção você está procurando?'
       ];
       break;
     case 'ClothesType':
       answers = [
-        'Sobre qual peça de roupa você deseja saber?.',
-        'Qual peça de roupa você tem interesse?.'
+        'Sobre qual peça de roupa você deseja saber?',
+        'Qual peça de roupa você tem interesse?'
       ];
       break;
     default:
       answers = [
-        'Não entendi'
+        'Não entendi.'
       ];
       break;
   }
