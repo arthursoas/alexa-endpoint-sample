@@ -7,7 +7,7 @@ export const handleIntentRequest = (body, res) => {
   let response;
   switch (body.request.intent.name) {
     case 'SeeCollectionIntent':
-      response = newSeeCollectionIntentResponse();
+      response = newSeeCollectionIntentResponse(body);
       break;
     default:
       res.send(400);
@@ -16,7 +16,18 @@ export const handleIntentRequest = (body, res) => {
   res.send(response);
 }
 
-const newSeeCollectionIntentResponse = () => {
+const newSeeCollectionIntentResponse = (body) => {
+  const { request } = body;
+  if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
+    if (request.intent.slots.CollectionType.value === undefined) {
+      return elicitSlot('CollectionType');   
+    }
+
+    if (request.intent.slots.ClothesType.value === undefined) {
+      return elicitSlot('ClothesType');
+    }
+  }
+
   const outputSpeechText = generateAnswer();
 
   const outputSpeech = {
@@ -47,4 +58,49 @@ const generateAnswer = () => {
   ];
 
   return answers[Math.floor(Math.random()*answers.length)];
+}
+
+const generateSlotElicitationAnswer = (slot) => {
+  let answers = [];
+  switch (slot) {
+    case 'CollectionType':
+      answers = [
+        'Sobre qual coleção você deseja saber?.',
+        'Qual coleção você está procurando?.'
+      ];
+      break;
+    case 'ClothesType':
+      answers = [
+        'Sobre qual peça de roupa você deseja saber?.',
+        'Qual peça de roupa você tem interesse?.'
+      ];
+      break;
+    default:
+      answers = [
+        'Não entendi'
+      ];
+      break;
+  }
+  return answers[Math.floor(Math.random()*answers.length)];
+}
+
+const elicitSlot = (slot) => {
+  console.log(slot);
+  const outputSpeechText = generateSlotElicitationAnswer(slot);
+
+  const outputSpeech = {
+    type: opType.plainText,
+    text: outputSpeechText,
+    playBehavior: playBehavior.enqueue
+  };
+
+  const directives = [
+    {
+      type: 'Dialog.ElicitSlot',
+      slotToElicit: slot,
+    }
+  ]
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, undefined, undefined, directives, false);
+  return responseFormatter.formatResponse();
 }
