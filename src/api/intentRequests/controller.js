@@ -46,7 +46,17 @@ const SeeCollectionIntentResponse = (body) => {
     }
   };
 
-  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, undefined, true);
+  const directives = [
+    {
+      type: 'Dialog.Delegate',
+      updatedIntent: {
+        name: 'SeeCollectionIntent',
+        confirmationStatus: 'NONE'
+      }
+    }
+  ]
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, directives, false);
   return responseFormatter.formatResponse();
 }
 
