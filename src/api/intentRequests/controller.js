@@ -28,7 +28,7 @@ const SeeCollectionIntentResponse = (body) => {
     }
   }
 
-  const outputSpeechText = generateAnswer();
+  const outputSpeechText = generateAnswer(request);
 
   const outputSpeech = {
     type: opType.plainText,
@@ -51,7 +51,7 @@ const SeeCollectionIntentResponse = (body) => {
 }
 
 // Private
-const generateAnswer = () => {
+const generateAnswer = (request) => {
   const answers = [
     'Você está procurando por ' + request.intent.slots.ClothesType.value +
     ' da coleção ' + request.intent.slots.CollectionType.value
