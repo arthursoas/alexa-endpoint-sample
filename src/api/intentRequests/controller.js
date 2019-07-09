@@ -21,32 +21,18 @@ export const handleIntentRequest = (body, res) => {
 
 const AddressIntentResponse = (body) => {
   const { request } = body;
+  if (request.dialogState == 'COMPLETED') {
+    return finishAddressIntent(request);
+  }
+
   if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
     if (request.intent.slots.State.value === undefined) {
       return elicitSlot('State');   
     }
   }
 
-  const outputSpeechText = generateAnswer(request);
-
-  const outputSpeech = {
-    type: opType.plainText,
-    text: outputSpeechText,
-    playBehavior: playBehavior.enqueue
-  };
-
-  const card = {
-    type: cType.standard,
-    title: 'Venha nos conhecer!',
-    text: outputSpeechText,
-    image: {
-      smallImageUrl: 'https://i2.wp.com/cantinhodena.com.br/wp-content/uploads/2015/11/compras-nos-estados-unidos-roupas-femininas-capa.jpg?resize=709%2C355&ssl=1',
-      largeImageUrl: 'https://s2.glbimg.com/wu_oq4FjGgamZZ61MpCBPyI8Vn8=/940x523/e.glbimg.com/og/ed/f/original/2018/07/03/assorted-blurred-background-boutique-994523.jpg'
-    }
-  };
-
-  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, undefined, false);
-  return responseFormatter.formatResponse();
+  // if all necessary fields are filled, complete the intent
+  return completeAddressIntent(request);
 }
 
 const SeeCollectionIntentResponse = (body) => {
@@ -79,7 +65,7 @@ const generateAnswer = (request) => {
         'Vi que você está procurando por ' + request.intent.slots.ClothesType.value +
         ' da coleção ' + request.intent.slots.CollectionType.value + '.' +
         ' Visite nossa loja mais próxima para saber mais. Use o Cupom ALEXA10 e ganhe 10%' +
-        ' de desconto na sua compra!' 
+        ' de desconto na sua compra! Vamos ver qual a loja mais próxima. Em qual estado você mora?' 
       ];
       break;
     case 'AddressIntent':
@@ -142,7 +128,7 @@ const elicitSlot = (slot, last = false) => {
 }
 
 const completeSeeCollectionIntent = (request) => {
-  const outputSpeechText = generateAnswer(request);
+  const outputSpeechText = '';
 
   const outputSpeech = {
     type: opType.plainText,
@@ -195,7 +181,7 @@ const completeSeeCollectionIntent = (request) => {
 }
 
 const udateIntentToAddressIntent = (request) => {
-  const outputSpeechText = 'Vamos ver qual a loja mais próxima. Em qual estado você mora?';
+  const outputSpeechText = generateAnswer('SeeCollectionIntent');
 
   const outputSpeech = {
     type: opType.plainText,
@@ -227,5 +213,75 @@ const udateIntentToAddressIntent = (request) => {
   ]
 
   const responseFormatter = new ResponseFormatter(outputSpeech, undefined, undefined, directives, false);
+  return responseFormatter.formatResponse();
+}
+
+const completeAddressIntent = (request) => {
+  const outputSpeechText = '';
+
+  const outputSpeech = {
+    type: opType.plainText,
+    text: outputSpeechText,
+    playBehavior: playBehavior.enqueue
+  };
+
+  const card = {
+    type: cType.standard,
+    title: 'Arrasou',
+    text: outputSpeechText,
+    image: {
+      smallImageUrl: 'https://i2.wp.com/cantinhodena.com.br/wp-content/uploads/2015/11/compras-nos-estados-unidos-roupas-femininas-capa.jpg?resize=709%2C355&ssl=1',
+      largeImageUrl: 'https://s2.glbimg.com/wu_oq4FjGgamZZ61MpCBPyI8Vn8=/940x523/e.glbimg.com/og/ed/f/original/2018/07/03/assorted-blurred-background-boutique-994523.jpg'
+    }
+  };
+
+  const directives = [
+    {
+      type: 'Dialog.Delegate',
+      updatedIntent: {
+        name: 'AddressIntent',
+        confirmationStatus: 'NONE',
+        slots: {
+          RequiredSlot: {
+            name: 'RequiredSlot',
+            value: 'filled',
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          },
+          State: {
+            name: 'State',
+            value: request.intent.slots.State.value,
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          }
+        }
+      }
+    }
+  ]
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, directives, false);
+  return responseFormatter.formatResponse();
+}
+
+const finishAddressIntent = (request) => {
+  const outputSpeechText = generateAnswer(request);
+
+  const outputSpeech = {
+    type: opType.plainText,
+    text: outputSpeechText,
+    playBehavior: playBehavior.enqueue
+  };
+
+  const card = {
+    type: cType.standard,
+    title: 'Venha nos conhecer!',
+    text: outputSpeechText,
+    image: {
+      smallImageUrl: 'https://i2.wp.com/cantinhodena.com.br/wp-content/uploads/2015/11/compras-nos-estados-unidos-roupas-femininas-capa.jpg?resize=709%2C355&ssl=1',
+      largeImageUrl: 'https://s2.glbimg.com/wu_oq4FjGgamZZ61MpCBPyI8Vn8=/940x523/e.glbimg.com/og/ed/f/original/2018/07/03/assorted-blurred-background-boutique-994523.jpg'
+    }
+  };
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, undefined, false);
   return responseFormatter.formatResponse();
 }
