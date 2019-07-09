@@ -85,16 +85,14 @@ const SeeCollectionIntentResponse = (body) => {
       updatedIntent: {
         name: 'AddressIntent',
         confirmationStatus: 'NONE',
-        slots: [
-          {
-            RequiredSlot: {
-              name: 'RequiredSlot',
-              value: 'filled',
-              resolutions: {},
-              confirmationStatus: 'NONE'
-            }
+        slots: {
+          RequiredSlot: {
+            name: 'RequiredSlot',
+            value: 'filled',
+            resolutions: {},
+            confirmationStatus: 'NONE'
           }
-        ]
+        }
       }
     }
   ]
