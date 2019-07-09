@@ -45,7 +45,7 @@ const AddressIntentResponse = (body) => {
     }
   };
 
-  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, directives, false);
+  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, undefined, false);
   return responseFormatter.formatResponse();
 }
 
