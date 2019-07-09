@@ -205,22 +205,11 @@ const udateIntentToAddressIntent = (request) => {
 
   const directives = [
     {
-      type: 'Dialog.Delegate',
+      type: 'Dialog.ElicitSlot',
+      slotToElicit: "State",
       updatedIntent: {
         name: 'AddressIntent',
-        confirmationStatus: 'NONE',
-        slots: {
-          RequiredSlot: {
-            name: 'RequiredSlot',
-            resolutions: {},
-            confirmationStatus: 'NONE'
-          },
-          State: {
-            name: 'State',
-            resolutions: {},
-            confirmationStatus: 'NONE'
-          }
-        }
+        confirmationStatus: 'NONE'
       }
     }
   ]
