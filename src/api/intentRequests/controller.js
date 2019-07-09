@@ -98,6 +98,7 @@ const generateSlotElicitationAnswer = (slot) => {
         'Qual o estado você está?',
         'Em qual estado você mora?'
       ]
+      break;
     default:
       answers = [
         'Não entendi.'
