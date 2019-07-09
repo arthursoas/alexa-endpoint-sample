@@ -162,8 +162,7 @@ const completeSeeCollectionIntent = (request) => {
 
   const directives = [
     {
-      type: 'Dialog.ElicitSlot',
-      slotToElicit: "RequiredSlot",
+      type: 'Dialog.Delegate',
       updatedIntent: {
         name: 'SeeCollectionIntent',
         confirmationStatus: 'NONE',
@@ -196,7 +195,7 @@ const completeSeeCollectionIntent = (request) => {
 }
 
 const udateIntentToAddressIntent = (request) => {
-  const outputSpeechText = generateAnswer(request);
+  const outputSpeechText = 'Vamos ver qual a loja mais próxima. Em qual estado você mora?';
 
   const outputSpeech = {
     type: opType.plainText,
