@@ -83,7 +83,7 @@ const SeeCollectionIntentResponse = (body) => {
     {
       type: 'Dialog.Delegate',
       updatedIntent: {
-        name: 'AddressIntent',
+        name: 'SeeCollectionIntent',
         confirmationStatus: 'NONE',
         slots: {
           RequiredSlot: {
