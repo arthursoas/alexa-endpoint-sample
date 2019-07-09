@@ -57,7 +57,8 @@ const SeeCollectionIntentResponse = (body) => {
     }
 
     if (request.intent.slots.ClothesType.value === undefined) {
-      const directives = [
+      const response = elicitSlot('ClothesType');
+      response.response.directives.push(
         {
           type: 'Dialog.Delegate',
           updatedIntent: {
@@ -73,11 +74,8 @@ const SeeCollectionIntentResponse = (body) => {
             }
           }
         }
-      ]
-      return {
-        ...elicitSlot('ClothesType'),
-        directives
-      };
+      );
+      return response;
     }
   }
 
@@ -165,7 +163,7 @@ const generateSlotElicitationAnswer = (slot) => {
   return answers[Math.floor(Math.random()*answers.length)];
 }
 
-const elicitSlot = (slot) => {
+const elicitSlot = (slot, last = false) => {
   const outputSpeechText = generateSlotElicitationAnswer(slot);
 
   const outputSpeech = {
