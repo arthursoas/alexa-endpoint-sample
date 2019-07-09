@@ -52,7 +52,7 @@ const AddressIntentResponse = (body) => {
 const SeeCollectionIntentResponse = (body) => {
   const { request } = body;
   if (request.dialogState == 'COMPLETED') {
-    return udateIntentToAddressIntent();
+    return udateIntentToAddressIntent(request);
   }
 
   if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
@@ -194,7 +194,7 @@ const completeSeeCollectionIntent = (request) => {
   return responseFormatter.formatResponse();
 }
 
-const udateIntentToAddressIntent = () => {
+const udateIntentToAddressIntent = (request) => {
   const outputSpeechText = generateAnswer(request);
 
   const outputSpeech = {
