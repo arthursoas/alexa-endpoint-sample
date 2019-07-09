@@ -51,20 +51,22 @@ const AddressIntentResponse = (body) => {
 
 const SeeCollectionIntentResponse = (body) => {
   const { request } = body;
-  if (request.intent.slots.CollectionType.value === undefined) {
-    return elicitSlot('CollectionType');   
+  if (request.dialogState == 'COMPLETED') {
+    return udateIntentToAddressIntent(request);
   }
 
-  if (request.intent.slots.ClothesType.value === undefined) {
-    return elicitSlot('ClothesType');
-  }
+  if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
+    if (request.intent.slots.CollectionType.value === undefined) {
+      return elicitSlot('CollectionType');   
+    }
 
-  return udateIntentToAddressIntent(request);
+    if (request.intent.slots.ClothesType.value === undefined) {
+      return elicitSlot('ClothesType');
+    }
 
-
-  // if all necessary fields are filled, complete the intent
+    // if all necessary fields are filled, complete the intent
     return completeSeeCollectionIntent(request);
-  
+  }
 }
 
 
@@ -160,7 +162,8 @@ const completeSeeCollectionIntent = (request) => {
 
   const directives = [
     {
-      type: 'Dialog.Delegate',
+      type: 'Dialog.ElicitSlot',
+      slotToElicit: "RequiredSlot",
       updatedIntent: {
         name: 'SeeCollectionIntent',
         confirmationStatus: 'NONE',
