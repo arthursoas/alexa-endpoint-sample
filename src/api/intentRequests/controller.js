@@ -181,7 +181,7 @@ const completeSeeCollectionIntent = (request) => {
 }
 
 const udateIntentToAddressIntent = (request) => {
-  const outputSpeechText = generateAnswer('SeeCollectionIntent');
+  const outputSpeechText = generateAnswer(request);
 
   const outputSpeech = {
     type: opType.plainText,
