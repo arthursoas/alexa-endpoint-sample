@@ -51,6 +51,10 @@ const AddressIntentResponse = (body) => {
 
 const SeeCollectionIntentResponse = (body) => {
   const { request } = body;
+  if (request.dialogState == 'COMPLETED') {
+    return udateIntentToAddressIntent();
+  }
+
   if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
     if (request.intent.slots.CollectionType.value === undefined) {
       return elicitSlot('CollectionType');   
@@ -59,58 +63,10 @@ const SeeCollectionIntentResponse = (body) => {
     if (request.intent.slots.ClothesType.value === undefined) {
       return elicitSlot('ClothesType');
     }
+
+    // if all necessary fields are filled, complete the intent
+    return completeSeeCollectionIntent(request);
   }
-
-  const outputSpeechText = generateAnswer(request);
-
-  const outputSpeech = {
-    type: opType.plainText,
-    text: outputSpeechText,
-    playBehavior: playBehavior.enqueue
-  };
-
-  const card = {
-    type: cType.standard,
-    title: 'Arrasou',
-    text: outputSpeechText,
-    image: {
-      smallImageUrl: 'https://i2.wp.com/cantinhodena.com.br/wp-content/uploads/2015/11/compras-nos-estados-unidos-roupas-femininas-capa.jpg?resize=709%2C355&ssl=1',
-      largeImageUrl: 'https://s2.glbimg.com/wu_oq4FjGgamZZ61MpCBPyI8Vn8=/940x523/e.glbimg.com/og/ed/f/original/2018/07/03/assorted-blurred-background-boutique-994523.jpg'
-    }
-  };
-
-  const directives = [
-    {
-      type: 'Dialog.Delegate',
-      updatedIntent: {
-        name: 'SeeCollectionIntent',
-        confirmationStatus: 'NONE',
-        slots: {
-          RequiredSlot: {
-            name: 'RequiredSlot',
-            value: 'filled',
-            resolutions: {},
-            confirmationStatus: 'NONE'
-          },
-          ClothesType: {
-            name: 'ClothesType',
-            value: request.intent.slots.ClothesType.value,
-            resolutions: {},
-            confirmationStatus: 'NONE'
-          },
-          CollectionType: {
-            name: 'CollectionType',
-            value: request.intent.slots.CollectionType.value,
-            resolutions: {},
-            confirmationStatus: 'NONE'
-          }
-        }
-      }
-    }
-  ]
-
-  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, directives, false);
-  return responseFormatter.formatResponse();
 }
 
 
@@ -178,6 +134,82 @@ const elicitSlot = (slot, last = false) => {
     {
       type: 'Dialog.ElicitSlot',
       slotToElicit: slot,
+    }
+  ]
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, undefined, undefined, directives, false);
+  return responseFormatter.formatResponse();
+}
+
+const completeSeeCollectionIntent = (request) => {
+  const outputSpeechText = generateAnswer(request);
+
+  const outputSpeech = {
+    type: opType.plainText,
+    text: outputSpeechText,
+    playBehavior: playBehavior.enqueue
+  };
+
+  const card = {
+    type: cType.standard,
+    title: 'Arrasou',
+    text: outputSpeechText,
+    image: {
+      smallImageUrl: 'https://i2.wp.com/cantinhodena.com.br/wp-content/uploads/2015/11/compras-nos-estados-unidos-roupas-femininas-capa.jpg?resize=709%2C355&ssl=1',
+      largeImageUrl: 'https://s2.glbimg.com/wu_oq4FjGgamZZ61MpCBPyI8Vn8=/940x523/e.glbimg.com/og/ed/f/original/2018/07/03/assorted-blurred-background-boutique-994523.jpg'
+    }
+  };
+
+  const directives = [
+    {
+      type: 'Dialog.Delegate',
+      updatedIntent: {
+        name: 'SeeCollectionIntent',
+        confirmationStatus: 'NONE',
+        slots: {
+          RequiredSlot: {
+            name: 'RequiredSlot',
+            value: 'filled',
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          },
+          ClothesType: {
+            name: 'ClothesType',
+            value: request.intent.slots.ClothesType.value,
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          },
+          CollectionType: {
+            name: 'CollectionType',
+            value: request.intent.slots.CollectionType.value,
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          }
+        }
+      }
+    }
+  ]
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, directives, false);
+  return responseFormatter.formatResponse();
+}
+
+const udateIntentToAddressIntent = () => {
+  const outputSpeechText = 'Vamos ver qual a loja mais perto de você.';
+
+  const outputSpeech = {
+    type: opType.plainText,
+    text: outputSpeechText,
+    playBehavior: playBehavior.enqueue
+  };
+
+  const directives = [
+    {
+      type: 'Dialog.Delegate',
+      updatedIntent: {
+        name: 'AddressIntent',
+        confirmationStatus: 'NONE'
+      }
     }
   ]
 
