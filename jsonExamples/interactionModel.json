@@ -64,23 +64,17 @@
                 {	
                     "name": "SeeCollectionIntent",
                     "slots": [
+                    	{
+                    		"name": "RequiredSlot",
+                    		"type": "AMAZON.SearchQuery"
+                    	},
                         {
                             "name": "CollectionType",
-                            "type": "Collection",
-                            "samples": [
-                                "quero a {CollectionType}",
-                                "{CollectionType}",
-                                "coleção {CollectionType}"
-                            ]
+                            "type": "AMAZON.SearchQuery"
                         },
                         {
                             "name": "ClothesType",
-                            "type": "Clothe",
-                            "samples": [
-                                "modelos de {ClothesType}",
-                                "{ClothesType}",
-                                "novidade de {ClothesType}"
-                            ]
+                            "type": "AMAZON.SearchQuery"
                         }
                     ],
                     "samples": [
@@ -90,107 +84,34 @@
                         "Quero ver os {ClothesType}",
                         "Me mostre o que há de novo na coleção {CollectionType}",
                         "O que há de novidade na coleção desse mês",
-                        "quero ver as {ClothesType} de {CollectionType}",
                         "me mostre as novidades da nova coleção",
                         "O que há de novo na loja",
-                        "Chegaram novos {ClothesType}"
-                    ]
-                }
-            ],
-            "types": [
-                {
-                    "name": "Collection",
-                    "values": [
-                        {
-                            "id": "primavera_verao",
-                            "name": {
-                                "value": "primavera verão",
-                                "synonyms": [
-                                    "pimavera",
-                                    "verão",
-                                    "verao",
-                                    "verão primavera",
-                                    "verao primavera",
-                                    "primavera verao"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "outono_inverno",
-                            "name": {
-                                "value": "outono inverno",
-                                "synonyms": [
-                                    "outono",
-                                    "inverno",
-                                    "inverno outono"
-                                ]
-                            }
-                        }
+                        "Chegaram novos {ClothesType}",
+                        "Quero ver as coleções da loja",
+                        "Me mostre as coleções da loja"
                     ]
                 },
-                {
-                    "values": [
+                {	
+                    "name": "AddressIntent",
+                    "slots": [
+                    	{
+                    		"name": "RequiredSlot",
+                    		"type": "AMAZON.SearchQuery"
+                    	},
                         {
-                            "id": "camisas",
-                            "name": {
-                                "value": "camisas",
-                                "synonyms": [
-                                    "camisa",
-                                    "blusinhas",
-                                    "blusinha",
-                                    "t-shirts",
-                                    "t-shirt",
-                                    "camisetas",
-                                    "camiseta"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "bermudas",
-                            "name": {
-                                "value": "bermudas",
-                                "synonyms": [
-                                    "bermuda"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "calcas",
-                            "name": {
-                                "value": "calças",
-                                "synonyms": [
-                                    "calça",
-                                    "calça comprida"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "blusas",
-                            "name": {
-                                "value": "blusas",
-                                "synonyms": [
-                                    "blusa",
-                                    "jaquetas",
-                                    "jaqueta",
-                                    "agasalhos",
-                                    "agasalho",
-                                    "casacos",
-                                    "casaco",
-                                    "blusa de frio"
-                                ]
-                            }
-                        },
-                        {
-                            "id": "vestidos",
-                            "name": {
-                                "value": "vestidos",
-                                "synonyms": [
-                                    "vestido"
-                                ]
-                            }
+                            "name": "State",
+                            "type": "AMAZON.SearchQuery"
                         }
                     ],
-                    "name": "Clothe"
+                    "samples": [
+                        "Onde fica a loja",
+                        "Como chego à loja",
+                        "Qual a unidade mais próxima",
+                        "Como chegar a loja",
+                		"Qual o endereço",
+                		"endereço",
+                		"unidade de {State}"
+                    ]
                 }
             ]
         },
@@ -201,36 +122,48 @@
                     "confirmationRequired": false,
                     "prompts": {},
                     "slots": [
-                        {
-                            "name": "CollectionType",
-                            "type": "Collection",
-                            "elicitationRequired": false,
+                    	{
+                            "name": "RequiredSlot",
+                            "type": "AMAZON.SearchQuery",
+                            "elicitationRequired": true,
                             "confirmationRequired": false,
                             "prompts": {
-                                "elicitation": "Elicit.SeeCollectionIntent.CollectionSlot"
-                            },
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.CollectionSlot.hasNoEntityResolutionMatch"
-                                }
-                            ]
+                                "elicitation": "Elicit.AnyIntent.RequiredSlot"
+                            }
+                        },
+                    	{
+                            "name": "CollectionType",
+                            "type": "AMAZON.SearchQuery",
+                            "elicitationRequired": false,
+                            "confirmationRequired": false
                         },
                         {
                             "name": "ClothesType",
-                            "type": "Clothe",
+                            "type": "AMAZON.SearchQuery",
                             "elicitationRequired": false,
-                            "confirmationRequired": true,
+                            "confirmationRequired": false
+                        }
+                    ]
+                },
+                {
+                    "name": "AddressIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                    	{
+                            "name": "RequiredSlot",
+                            "type": "AMAZON.SearchQuery",
+                            "elicitationRequired": true,
+                            "confirmationRequired": false,
                             "prompts": {
-                                "confirmation": "Confirm.SeeCollectionIntent.ChothesSlot",
-                                "elicitation": "Elicit.SeeCollectionIntent.ChothesSlot"
-                            },
-                            "validations": [
-                                {
-                                    "type": "hasEntityResolutionMatch",
-                                    "prompt": "Slot.Validation.ChothesSlot.hasNoEntityResolutionMatch"
-                                }
-                            ]
+                                "elicitation": "Elicit.AnyIntent.RequiredSlot"
+                            }
+                        },
+                    	{
+                            "name": "State",
+                            "type": "AMAZON.SearchQuery",
+                            "elicitationRequired": false,
+                            "confirmationRequired": false
                         }
                     ]
                 }
@@ -239,51 +172,11 @@
         },
         "prompts": [
             {
-                "id": "Elicit.SeeCollectionIntent.CollectionSlot",
+                "id": "Elicit.AnyIntent.RequiredSlot",
                 "variations": [
                     {
                         "type": "PlainText",
-                        "value": "Qual coleção você quer conhecer?"
-                    }
-                ]
-            },
-            {
-                "id": "Elicit.SeeCollectionIntent.ChothesSlot",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Qual peça de roupa você tem interesse?"
-                    }
-                ]
-            },
-            {
-                "id": "Confirm.SeeCollectionIntent.ChothesSlot",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Você realmente quer saber sobre {ClothesType}?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.CollectionSlot.hasNoEntityResolutionMatch",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Desculpe mas não entendi. Você gostaria de saber sobre primavera verão ou outono inverno?"
-                    },
-                    {
-                        "type": "PlainText",
-                        "value": "Não encontrei essa coleção em meu sistema. Você gostaria de saber sobre primavera verão ou outono inverno?"
-                    }
-                ]
-            },
-            {
-                "id": "Slot.Validation.ChothesSlot.hasNoEntityResolutionMatch",
-                "variations": [
-                    {
-                        "type": "PlainText",
-                        "value": "Hmmm, ainda não trabalhamos com esse tipo de peça."
+                        "value": "O campo obrigatório não foi preenchido"
                     }
                 ]
             }
