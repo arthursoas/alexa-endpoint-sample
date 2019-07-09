@@ -1,0 +1,292 @@
+{
+    "interactionModel": {
+        "languageModel": {
+            "invocationName": "sempre fit modas",
+            "intents": [
+                {
+                    "name": "AMAZON.CancelIntent",
+                    "samples": [
+                        "ok obrigado",
+                        "até logo",
+                        "adeus",
+                        "tchau"
+                    ]
+                },
+                {
+                    "name": "AMAZON.HelpIntent",
+                    "samples": [
+                        "preciso de ajuda",
+                        "o que você faz",
+                        "não estou entendendo",
+                        "o que tenho que fazer",
+                        "socorro",
+                        "será que estou na lagoinha"
+                    ]
+                },
+                {
+                    "name": "AMAZON.StopIntent",
+                    "samples": [
+                        "pare",
+                        "saia agora",
+                        "sair"
+                    ]
+                },
+                {
+                    "name": "AMAZON.NavigateHomeIntent",
+                    "samples": [
+                        "cancelar",
+                        "volte para o início"
+                    ]
+                },
+                {
+                    "name": "ConfirmationIntent",
+                    "samples": [
+                        "sim",
+                        "claro",
+                        "com certeza",
+                        "concerteza",
+                        "obvio",
+                        "afirmativo",
+                        "positivo",
+                        "isso"
+                    ]
+                },
+                {
+                    "name": "DenialIntent",
+                    "samples": [
+                        "não",
+                        "jamais",
+                        "nunca",
+                        "fora",
+                        "negativo"
+                    ]
+                },
+                {	
+                    "name": "SeeCollectionIntent",
+                    "slots": [
+                        {
+                            "name": "CollectionType",
+                            "type": "Collection",
+                            "samples": [
+                                "quero a {CollectionType}",
+                                "{CollectionType}",
+                                "coleção {CollectionType}"
+                            ]
+                        },
+                        {
+                            "name": "ClothesType",
+                            "type": "Clothe",
+                            "samples": [
+                                "modelos de {ClothesType}",
+                                "{ClothesType}",
+                                "novidade de {ClothesType}"
+                            ]
+                        }
+                    ],
+                    "samples": [
+                        "O que há e novidade na loja",
+                        "O que vocês têm a venda",
+                        "Quais as novidades na coleção {CollectionType}",
+                        "Quero ver os {ClothesType}",
+                        "Me mostre o que há de novo na coleção {CollectionType}",
+                        "O que há de novidade na coleção desse mês",
+                        "quero ver as {ClothesType} de {CollectionType}",
+                        "me mostre as novidades da nova coleção",
+                        "O que há de novo na loja",
+                        "Chegaram novos {ClothesType}"
+                    ]
+                }
+            ],
+            "types": [
+                {
+                    "name": "Collection",
+                    "values": [
+                        {
+                            "id": "primavera_verao",
+                            "name": {
+                                "value": "primavera verão",
+                                "synonyms": [
+                                    "pimavera",
+                                    "verão",
+                                    "verao",
+                                    "verão primavera",
+                                    "verao primavera",
+                                    "primavera verao"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "outono_inverno",
+                            "name": {
+                                "value": "outono inverno",
+                                "synonyms": [
+                                    "outono",
+                                    "inverno",
+                                    "inverno outono"
+                                ]
+                            }
+                        }
+                    ]
+                },
+                {
+                    "values": [
+                        {
+                            "id": "camisas",
+                            "name": {
+                                "value": "camisas",
+                                "synonyms": [
+                                    "camisa",
+                                    "blusinhas",
+                                    "blusinha",
+                                    "t-shirts",
+                                    "t-shirt",
+                                    "camisetas",
+                                    "camiseta"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "bermudas",
+                            "name": {
+                                "value": "bermudas",
+                                "synonyms": [
+                                    "bermuda"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "calcas",
+                            "name": {
+                                "value": "calças",
+                                "synonyms": [
+                                    "calça",
+                                    "calça comprida"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "blusas",
+                            "name": {
+                                "value": "blusas",
+                                "synonyms": [
+                                    "blusa",
+                                    "jaquetas",
+                                    "jaqueta",
+                                    "agasalhos",
+                                    "agasalho",
+                                    "casacos",
+                                    "casaco",
+                                    "blusa de frio"
+                                ]
+                            }
+                        },
+                        {
+                            "id": "vestidos",
+                            "name": {
+                                "value": "vestidos",
+                                "synonyms": [
+                                    "vestido"
+                                ]
+                            }
+                        }
+                    ],
+                    "name": "Clothe"
+                }
+            ]
+        },
+        "dialog": {
+            "intents": [
+                {
+                    "name": "SeeCollectionIntent",
+                    "confirmationRequired": false,
+                    "prompts": {},
+                    "slots": [
+                        {
+                            "name": "CollectionType",
+                            "type": "Collection",
+                            "elicitationRequired": false,
+                            "confirmationRequired": false,
+                            "prompts": {
+                                "elicitation": "Elicit.SeeCollectionIntent.CollectionSlot"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.CollectionSlot.hasNoEntityResolutionMatch"
+                                }
+                            ]
+                        },
+                        {
+                            "name": "ClothesType",
+                            "type": "Clothe",
+                            "elicitationRequired": false,
+                            "confirmationRequired": true,
+                            "prompts": {
+                                "confirmation": "Confirm.SeeCollectionIntent.ChothesSlot",
+                                "elicitation": "Elicit.SeeCollectionIntent.ChothesSlot"
+                            },
+                            "validations": [
+                                {
+                                    "type": "hasEntityResolutionMatch",
+                                    "prompt": "Slot.Validation.ChothesSlot.hasNoEntityResolutionMatch"
+                                }
+                            ]
+                        }
+                    ]
+                }
+            ],
+            "delegationStrategy": "SKILL_RESPONSE"
+        },
+        "prompts": [
+            {
+                "id": "Elicit.SeeCollectionIntent.CollectionSlot",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Qual coleção você quer conhecer?"
+                    }
+                ]
+            },
+            {
+                "id": "Elicit.SeeCollectionIntent.ChothesSlot",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Qual peça de roupa você tem interesse?"
+                    }
+                ]
+            },
+            {
+                "id": "Confirm.SeeCollectionIntent.ChothesSlot",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Você realmente quer saber sobre {ClothesType}?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.CollectionSlot.hasNoEntityResolutionMatch",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Desculpe mas não entendi. Você gostaria de saber sobre primavera verão ou outono inverno?"
+                    },
+                    {
+                        "type": "PlainText",
+                        "value": "Não encontrei essa coleção em meu sistema. Você gostaria de saber sobre primavera verão ou outono inverno?"
+                    }
+                ]
+            },
+            {
+                "id": "Slot.Validation.ChothesSlot.hasNoEntityResolutionMatch",
+                "variations": [
+                    {
+                        "type": "PlainText",
+                        "value": "Hmmm, ainda não trabalhamos com esse tipo de peça."
+                    }
+                ]
+            }
+        ]
+    }
+}
