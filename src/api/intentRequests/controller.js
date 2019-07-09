@@ -22,7 +22,7 @@ export const handleIntentRequest = (body, res) => {
 const AddressIntentResponse = (body) => {
   const { request } = body;
   if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
-    if (request.intent.slots.CollectionType.value === undefined) {
+    if (request.intent.slots.State.value === undefined) {
       return elicitSlot('State');   
     }
   }
