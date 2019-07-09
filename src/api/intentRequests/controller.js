@@ -195,7 +195,7 @@ const completeSeeCollectionIntent = (request) => {
 }
 
 const udateIntentToAddressIntent = () => {
-  const outputSpeechText = 'Vamos ver qual a loja mais perto de você.';
+  const outputSpeechText = generateAnswer(request);
 
   const outputSpeech = {
     type: opType.plainText,
@@ -208,7 +208,19 @@ const udateIntentToAddressIntent = () => {
       type: 'Dialog.Delegate',
       updatedIntent: {
         name: 'AddressIntent',
-        confirmationStatus: 'NONE'
+        confirmationStatus: 'NONE',
+        slots: {
+          RequiredSlot: {
+            name: 'RequiredSlot',
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          },
+          State: {
+            name: 'State',
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          }
+        }
       }
     }
   ]
