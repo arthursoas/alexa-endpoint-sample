@@ -209,7 +209,19 @@ const udateIntentToAddressIntent = (request) => {
       slotToElicit: "State",
       updatedIntent: {
         name: 'AddressIntent',
-        confirmationStatus: 'NONE'
+        confirmationStatus: 'NONE',
+        slots: {
+          RequiredSlot: {
+            name: 'RequiredSlot',
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          },
+          State: {
+            name: 'State',
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          }
+        }
       }
     }
   ]
