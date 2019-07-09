@@ -57,7 +57,27 @@ const SeeCollectionIntentResponse = (body) => {
     }
 
     if (request.intent.slots.ClothesType.value === undefined) {
-      return elicitSlot('ClothesType');
+      const directives = [
+        {
+          type: 'Dialog.Delegate',
+          updatedIntent: {
+            name: 'SeeCollectionIntent',
+            confirmationStatus: 'NONE',
+            slots: {
+              RequiredeSlot: {
+                name: "RequiredeSlot",
+                value: "filled",
+                resolutions: {},
+                confirmationStatus: "NONE"
+              }
+            }
+          }
+        }
+      ]
+      return {
+        ...elicitSlot('ClothesType'),
+        directives
+      };
     }
   }
 
@@ -84,15 +104,7 @@ const SeeCollectionIntentResponse = (body) => {
       type: 'Dialog.Delegate',
       updatedIntent: {
         name: 'AddressIntent',
-        confirmationStatus: 'NONE',
-        slots: {
-          RequiredeSlot: {
-            name: "RequiredeSlot",
-            value: "filled",
-            resolutions: {},
-            confirmationStatus: "NONE"
-          }
-        }
+        confirmationStatus: 'NONE'
       }
     }
   ]
