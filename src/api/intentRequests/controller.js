@@ -91,6 +91,18 @@ const SeeCollectionIntentResponse = (body) => {
             value: 'filled',
             resolutions: {},
             confirmationStatus: 'NONE'
+          },
+          ClothesType: {
+            name: 'ClothesType',
+            value: request.intent.slots.ClothesType.value,
+            resolutions: {},
+            confirmationStatus: 'NONE'
+          },
+          CollectionType: {
+            name: 'CollectionType',
+            value: request.intent.slots.CollectionType.value,
+            resolutions: {},
+            confirmationStatus: 'NONE'
           }
         }
       }
