@@ -1,3 +1,12 @@
 export const handleSessionEndedRequest = (body, res) => {
-  res.status(204).send();
+  const outputSpeechText = 'Obrigado por visitar a sempre fit modas!';
+
+  const outputSpeech = {
+    type: opType.plainText,
+    text: outputSpeechText,
+    playBehavior: playBehavior.enqueue
+  };
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, undefined, undefined, undefined, false);
+  res.send(responseFormatter.formatResponse());
 }
