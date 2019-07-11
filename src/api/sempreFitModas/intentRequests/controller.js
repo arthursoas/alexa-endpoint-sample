@@ -1,7 +1,7 @@
-import ResponseFormatter from '../../services/formatters/response';
+import ResponseFormatter from '../../../services/formatters/response';
 
-import { type as opType, playBehavior } from '../../services/misc/consts/outputSpeech';
-import { type as cType } from '../../services/misc/consts/card';
+import { type as opType, playBehavior } from '../../../services/misc/consts/outputSpeech';
+import { type as cType } from '../../../services/misc/consts/card';
 
 export const handleIntentRequest = (body, res) => {
   let response;
@@ -145,6 +145,8 @@ const elicitSlot = (slot, last = false) => {
 }
 
 const completeSeeCollectionIntent = (request) => {
+  console.log('responseFormatter.formatResponse()00');
+
   const outputSpeechText = '';
 
   const outputSpeech = {
@@ -194,6 +196,7 @@ const completeSeeCollectionIntent = (request) => {
   ]
 
   const responseFormatter = new ResponseFormatter(outputSpeech, card, undefined, directives, false);
+  console.log(responseFormatter.formatResponse());
   return responseFormatter.formatResponse();
 }
 

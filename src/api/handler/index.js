@@ -14,4 +14,8 @@ router.post('/handle',
   handleMessage
 )
 
+router.post('/handle/:id',
+  handleMessage
+)
+
 export default router

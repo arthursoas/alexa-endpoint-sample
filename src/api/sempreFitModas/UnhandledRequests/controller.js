@@ -1,7 +1,7 @@
-import ResponseFormatter from '../../services/formatters/response';
+import ResponseFormatter from '../../../services/formatters/response';
 
-import { type as opType, playBehavior } from '../../services/misc/consts/outputSpeech';
-import { type as cType } from '../../services/misc/consts/card';
+import { type as opType, playBehavior } from '../../../services/misc/consts/outputSpeech';
+import { type as cType } from '../../../services/misc/consts/card';
 
 export const handleUnhandledRequest = (body, res) => {
   const outputSpeechText = 'Desculpe, não entendi o que você deseja.';
