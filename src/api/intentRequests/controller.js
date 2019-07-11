@@ -12,11 +12,27 @@ export const handleIntentRequest = (body, res) => {
     case 'AddressIntent':
       response = AddressIntentResponse(body);
       break;
+    case 'AMAZON.NoIntent':
+      response = NoIntentResponse(body);
+      break;
     default:
       res.send(400);
   }
 
   res.send(response);
+}
+
+const NoIntentResponse = (body) => {
+  const outputSpeechText = 'Oi, você ainda está aí? Em que posso ajudar?';
+
+  const outputSpeech = {
+    type: opType.plainText,
+    text: outputSpeechText,
+    playBehavior: playBehavior.enqueue
+  };
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, undefined, undefined, undefined, false);
+  return responseFormatter.formatResponse();
 }
 
 const AddressIntentResponse = (body) => {
