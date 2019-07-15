@@ -6,8 +6,8 @@ import { type as cType } from '../../../services/misc/consts/card';
 export const handleIntentRequest = (body, res) => {
   let response;
   switch (body.request.intent.name) {
-    case 'SeeCollectionIntent':
-      response = SeeCollectionIntentResponse(body);
+    case 'SoapOperaSummaryIntent':
+      response = SoapOperaSummaryIntentResponse(body);
       break;
     case 'AddressIntent':
       response = AddressIntentResponse(body);
@@ -51,7 +51,7 @@ const AddressIntentResponse = (body) => {
   return completeAddressIntent(request);
 }
 
-const SeeCollectionIntentResponse = (body) => {
+const SoapOperaSummaryIntentResponse = (body) => {
   const { request } = body;
   if (request.dialogState == 'COMPLETED') {
     return udateIntentToAddressIntent(request);

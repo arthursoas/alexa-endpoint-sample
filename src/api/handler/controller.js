@@ -3,6 +3,7 @@ import { proccessGloboRequest } from '../globo';
 
 export const handleMessage = (req, res) => {
   const { id } = req.params;
+  console.log(req.headers);
 
   switch (id) {
     case 'semprefitmodas':
