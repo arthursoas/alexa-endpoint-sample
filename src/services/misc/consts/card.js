@@ -1,6 +1,6 @@
 export const type = {
-  simple: 'simple',
-  standard: 'standard',
+  simple: 'Simple',
+  standard: 'Standard',
   linkAccount: 'LinkAccount',
   askForPermissionConsent: 'AskForPermissionsConsent'
 }
