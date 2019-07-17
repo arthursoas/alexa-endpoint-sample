@@ -4,7 +4,7 @@ export const type = {
 };
 
 export const playBehavior = {
-  enqueue: 'ENQUEUE',
+  enqueue: 'enqueue',
   replaceAll: 'REPLACE_ALL',
   replaceEnqueued: 'REPLACE_ENQUEUED'
 };
