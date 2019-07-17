@@ -212,17 +212,17 @@ const udateIntentToAddressIntent = (request) => {
       slotToElicit: "State",
       updatedIntent: {
         name: 'AddressIntent',
-        confirmationStatus: 'none',
+        confirmationStatus: 'NONE',
         slots: {
           requiredSlot: {
             name: 'RequiredSlot',
             resolutions: {},
-            confirmationStatus: 'none'
+            confirmationStatus: 'NONE'
           },
           state: {
             name: 'State',
             resolutions: {},
-            confirmationStatus: 'none'
+            confirmationStatus: 'NONE'
           }
         }
       }
@@ -257,19 +257,19 @@ const completeAddressIntent = (request) => {
       type: 'Dialog.Delegate',
       updatedIntent: {
         name: 'AddressIntent',
-        confirmationStatus: 'none',
+        confirmationStatus: 'NONE',
         slots: {
           requiredSlot: {
             name: 'RequiredSlot',
             value: 'filled',
             resolutions: {},
-            confirmationStatus: 'none'
+            confirmationStatus: 'NONE'
           },
           state: {
             name: 'State',
             value: request.intent.slots.State.value,
             resolutions: {},
-            confirmationStatus: 'none'
+            confirmationStatus: 'NONE'
           }
         }
       }
