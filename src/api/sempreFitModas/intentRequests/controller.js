@@ -170,19 +170,19 @@ const completeSeeCollectionIntent = (request) => {
         name: 'SeeCollectionIntent',
         confirmationStatus: 'NONE',
         slots: {
-          RequiredSlot: {
+          requiredSlot: {
             name: 'RequiredSlot',
             value: 'filled',
             resolutions: {},
             confirmationStatus: 'NONE'
           },
-          ClothesType: {
+          clothesType: {
             name: 'ClothesType',
             value: request.intent.slots.ClothesType.value,
             resolutions: {},
             confirmationStatus: 'NONE'
           },
-          CollectionType: {
+          collectionType: {
             name: 'CollectionType',
             value: request.intent.slots.CollectionType.value,
             resolutions: {},
@@ -214,12 +214,12 @@ const udateIntentToAddressIntent = (request) => {
         name: 'AddressIntent',
         confirmationStatus: 'none',
         slots: {
-          RequiredSlot: {
+          requiredSlot: {
             name: 'RequiredSlot',
             resolutions: {},
             confirmationStatus: 'none'
           },
-          State: {
+          state: {
             name: 'State',
             resolutions: {},
             confirmationStatus: 'none'
@@ -259,13 +259,13 @@ const completeAddressIntent = (request) => {
         name: 'AddressIntent',
         confirmationStatus: 'none',
         slots: {
-          RequiredSlot: {
+          requiredSlot: {
             name: 'RequiredSlot',
             value: 'filled',
             resolutions: {},
             confirmationStatus: 'none'
           },
-          State: {
+          state: {
             name: 'State',
             value: request.intent.slots.State.value,
             resolutions: {},
