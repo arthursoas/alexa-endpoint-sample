@@ -19,7 +19,7 @@ export const handleIntentRequest = (body, res) => {
       res.send(400);
   }
 
-  res.send(response);
+  res.status(202).send(response);
 }
 
 const NoIntentResponse = (body) => {
