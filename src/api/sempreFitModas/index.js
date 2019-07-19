@@ -4,9 +4,9 @@ import { handleSessionEndedRequest } from './SessionEndedRequest/controller';
 import { handleUnhandledRequest } from './UnhandledRequests/controller';
 
 export const proccessSempreFitModasRequest = (req, res) => {
-  const { body, header } = req;
+  const { body, headers } = req;
   console.log('-----------------------------------------------');
-  console.log(header);
+  console.log(headers);
   console.log('-----------------------------------------------');
 
   const now = new Date();
