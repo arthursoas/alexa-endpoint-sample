@@ -4,11 +4,14 @@ import { handleSessionEndedRequest } from './SessionEndedRequest/controller';
 import { handleUnhandledRequest } from './UnhandledRequests/controller';
 
 export const proccessGloboRequest = (req, res) => {
-  const { body } = req;
+  const { body, headers } = req;
+  console.log('-----------------------------------------------');
+  console.log(headers);
+  console.log('-----------------------------------------------');
 
   const now = new Date();
   console.log('-----------------------------------------------');
-  console.log(`semprefitmodas - ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR')}`);
+  console.log(`globo - ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR')}`);
 
   switch (body.request.type) {
     case 'LaunchRequest':
