@@ -20,6 +20,8 @@ export const handleIntentRequest = (body, res) => {
   }
 
   res.status(200).send(response);
+
+  console.log(response);
 }
 
 const NoIntentResponse = (body) => {
@@ -41,14 +43,26 @@ const AddressIntentResponse = (body) => {
     return finishAddressIntent(request);
   }
 
-  if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
+  if (request.dialogState) {
     if (request.intent.slots.State.value === undefined) {
       return elicitSlot('State');   
     }
-  }
 
-  // if all necessary fields are filled, complete the intent
-  return completeAddressIntent(request);
+    if (request.intent.slots.City.value === undefined) {
+      return elicitSlot('City');   
+    }
+
+    if (request.intent.slots.State.resolutions) {
+      if (request.intent.slots.State.resolutions.resolutionsPerAuthority[0].status.code == 'ER_SUCCESS_NO_MATCH') {
+        return elicitSlot('State');   
+      } else if (request.intent.slots.State.resolutions.resolutionsPerAuthority[0].status.code == 'ER_SUCCESS_MATCH') {
+        return finishAddressIntent(request);
+      }
+    }
+
+    // if all necessary fields are filled, complete the intent
+    return completeAddressIntent(request);
+  }
 }
 
 const SeeCollectionIntentResponse = (body) => {
@@ -57,7 +71,7 @@ const SeeCollectionIntentResponse = (body) => {
     return udateIntentToAddressIntent(request);
   }
 
-  if (request.dialogState == 'STARTED' || request.dialogState == 'IN_PROGRESS') {
+  if (request.dialogState) {
     if (request.intent.slots.CollectionType.value === undefined) {
       return elicitSlot('CollectionType');   
     }
@@ -67,6 +81,7 @@ const SeeCollectionIntentResponse = (body) => {
     }
 
     // if all necessary fields are filled, complete the intent
+    return udateIntentToAddressIntent(request);
     return completeSeeCollectionIntent(request);
   }
 }
@@ -86,7 +101,7 @@ const generateAnswer = (request) => {
       break;
     case 'AddressIntent':
       answers = [
-        'Nosso endereço em ' + request.intent.slots.State.value +
+        'Nosso endereço em ' + request.intent.slots.State.resolutions.resolutionsPerAuthority[0].values[0].value.name +
         ' é Avenida das Laranjeiras, 1450, bairro Centro.'
       ]
   }
@@ -113,6 +128,12 @@ const generateSlotElicitationAnswer = (slot) => {
       answers = [
         'Qual o estado você está?',
         'Em qual estado você mora?'
+      ]
+      break;
+    case 'City':
+      answers = [
+        'Qual a cidade você está?',
+        'Em qual cidade você mora?'
       ]
       break;
     default:
@@ -214,11 +235,6 @@ const udateIntentToAddressIntent = (request) => {
         name: 'AddressIntent',
         confirmationStatus: 'NONE',
         slots: {
-          RequiredSlot: {
-            name: 'RequiredSlot',
-            resolutions: {},
-            confirmationStatus: 'NONE'
-          },
           State: {
             name: 'State',
             resolutions: {},
