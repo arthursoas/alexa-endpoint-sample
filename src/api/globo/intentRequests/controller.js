@@ -5,19 +5,7 @@ import { type as cType } from '../../../services/misc/consts/card';
 
 export const handleIntentRequest = (body, res) => {
   let response;
-  switch (body.request.intent.name) {
-    case 'SoapOperaSummaryIntent':
-      response = SoapOperaSummaryIntentResponse(body);
-      break;
-    case 'AddressIntent':
-      response = AddressIntentResponse(body);
-      break;
-    case 'AMAZON.NoIntent':
-      response = NoIntentResponse(body);
-      break;
-    default:
-      response = UnknownIntentResponse(body);
-  }
+  response = UnknownIntentResponse(body);
 
   res.send(response);
 }
