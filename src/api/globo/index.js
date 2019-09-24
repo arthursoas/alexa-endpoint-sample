@@ -5,10 +5,6 @@ import { handleUnhandledRequest } from './UnhandledRequests/controller';
 
 export const proccessGloboRequest = (req, res) => {
   const { body, headers } = req;
-  console.log('-----------------------------------------------');
-  console.log(headers);
-  console.log('-----------------------------------------------');
-
   const now = new Date();
   console.log('-----------------------------------------------');
   console.log(`globo - ${now.toLocaleDateString('pt-BR')} ${now.toLocaleTimeString('pt-BR')}`);
