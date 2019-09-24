@@ -16,10 +16,23 @@ export const handleIntentRequest = (body, res) => {
       response = NoIntentResponse(body);
       break;
     default:
-      res.send(400);
+      response = UnknownIntentResponse(body);
   }
 
   res.send(response);
+}
+
+const UnknownIntentResponse = (body) => {
+  const outputSpeechText = 'Você está falando sobre a intenção ' + body.request.intent.name + '. Eu ainda não sei falar sobre isso. Em que posso ajudar?';
+
+  const outputSpeech = {
+    type: opType.plainText,
+    text: outputSpeechText,
+    playBehavior: playBehavior.enqueue
+  };
+
+  const responseFormatter = new ResponseFormatter(outputSpeech, undefined, undefined, undefined, false);
+  return responseFormatter.formatResponse();
 }
 
 const NoIntentResponse = (body) => {
